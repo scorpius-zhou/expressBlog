@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChitChat</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/editormd.preview.css" />
+    <link rel="stylesheet" href="/css/editormd.css"/>
+    <style>            
+            .editormd-html-preview {
+                width: 90%;
+                margin: 0 auto;
+            }
+        </style>
+  </head>
+  <body>
+    
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <i class="fa fa-comments-o"></i>
+        ChitChat
+      </a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li><a href="/login">Login</a></li>
+      </ul> -->
+    </div>
+  </div>
+</div>
+
+    <div class="container">           
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="lead"> <i class="fa fa-comment-o"></i> <%=session.title%></span>
+    <div class="pull-right">
+        <%=session.created_at %>
+    </div>
+
+  </div>
+  <div class="panel-body">
+        <div id="test-editormd-view2">
+            <textarea id="append-test" style="display:none;">
+
+<%-session.content%>
+
+            </textarea>          
+        </div>
+    </div>
+
+    <% if (admin == true) { %>
+        <div class="panel-body">
+            <form action="/session/edit" method="POST">
+                <div class="form-group">
+                        <button class="btn btn-primary pull-right" type="submit">Edit</button>
+                        <input type="hidden" name="session_id" value=<%=session.id%>></input>
+                </div>
+            </form>
+        </div>
+    <% } %>
+  <hr/>
+  
+<% for( let j = 0; j<session.SessComment.length; ++j ) {%>
+    <div class="panel-body">
+        <span class="lead"> <i class="fa fa-comment"></i> <%-session.SessComment[j].content%></span>
+        <div class="pull-right">
+            <%=session.SessComment[j].nickname%>-<%=session.SessComment[j].email%> - <%=session.SessComment[j].created_at%>
+        </div>    
+    </div>
+<%}%>
+
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/lib/marked.min.js"></script>
+<script src="/lib/prettify.min.js"></script>
+
+<script src="/lib/raphael.min.js"></script>
+<script src="/lib/underscore.min.js"></script>
+<script src="/lib/sequence-diagram.min.js"></script>
+<script src="/lib/flowchart.min.js"></script>
+<script src="/lib/jquery.flowchart.min.js"></script>
+
+<script src="/js/editormd.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var testEditormdView, testEditormdView2;
+        
+        $.get("test.md", function(markdown) {
+            
+            testEditormdView = editormd.markdownToHTML("test-editormd-view", {
+                markdown        : markdown ,//+ "\r\n" + $("#append-test").text(),
+                //htmlDecode      : true,       // 开启 HTML 标签解析，为了安全性，默认不开启
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                //toc             : false,
+                tocm            : true,    // Using [TOCM]
+                //tocContainer    : "#custom-toc-container", // 自定义 ToC 容器层
+                //gfm             : false,
+                //tocDropdown     : true,
+                // markdownSourceCode : true, // 是否保留 Markdown 源码，即是否删除保存源码的 Textarea 标签
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+            });
+            
+            //console.log("返回一个 jQuery 实例 =>", testEditormdView);
+            
+            // 获取Markdown源码
+            //console.log(testEditormdView.getMarkdown());
+            
+            //alert(testEditormdView.getMarkdown());
+        });
+            
+        testEditormdView2 = editormd.markdownToHTML("test-editormd-view2", {
+            htmlDecode      : "style,script,iframe",  // you can filter tags decode
+            emoji           : true,
+            taskList        : true,
+            tex             : true,  // 默认不解析
+            flowChart       : true,  // 默认不解析
+            sequenceDiagram : true,  // 默认不解析
+        });
+    });
+</script>
+
+<div class="panel panel-info">
+    <div class="panel-body">
+        <form role="form" action="/session/postComment" method="post">
+        <div class="form-group">
+            NickName: <input type="text" name="nick_name"/>  Email: <input type="text" name="email"/>
+            <br/>
+            <textarea class="form-control" name="content" id="body" placeholder="Write your reply here" rows="3"></textarea>
+            <input type="hidden" name="session_id" value=<%=session.id%>>
+            <br/>
+            <button class="btn btn-primary pull-right" type="submit">Reply</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+      
+    </div> 
+    
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>
+

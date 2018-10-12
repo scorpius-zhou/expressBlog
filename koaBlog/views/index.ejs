@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChitChat</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+  </head>
+  <body>
+    
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <i class="fa fa-comments-o"></i>
+        ChitChat
+      </a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+      <!-- <ul class="nav navbar-nav navbar-right">
+        <li><a href="/login">Login</a></li>
+      </ul> -->
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      
+      
+<p class="lead">
+  Join one below!
+</p>
+
+<% for(let i = 0; i<sessions.length; ++i ) {%>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="/session/read?id=<%=sessions[i].id%>">
+            <span class="lead" > <i class="fa fa-comment-o"></i> <%=sessions[i].title%></span>
+            </a>
+        </div>
+        <div class="panel-body">
+            <!-- Update at - <%=sessions[i].updated_at%> - 4 posts. -->
+            <% for( let j = 0; j<sessions[i].SessTags.length; ++j ) {%>
+                    <span><i class="fa fa-tag" aria-hidden="true"></i> <%=sessions[i].SessTags[j].name%> </span>
+            <%}%>
+            <div class="pull-right">
+                <a href="/session/read?id=<%=sessions[i].id%>">Read more</a>
+                <% if (admin == true) { %>
+                  &nbsp
+                  &nbsp
+                  &nbsp
+                  <div class="pull-right">
+                      <a href="/session/delete?id=<%=sessions[i].id%>" class="text-danger">delete</a>
+                  </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+<%}%>
+      
+    </div> 
+    
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
