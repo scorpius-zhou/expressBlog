@@ -1,7 +1,7 @@
 # koaBlog
 
-###Installation
+### Installation
 ```$ npm install```
 
-###Run
+### Run
 ```node app.js```
