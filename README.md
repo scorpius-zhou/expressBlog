@@ -1,4 +1,4 @@
-# koaBlog
+# expressBlog
 
 ### Installation
 ```$ npm install```
