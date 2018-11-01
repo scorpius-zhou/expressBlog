@@ -4,4 +4,4 @@
 ```$ npm install```
 
 ### Run
-```node app.js```
+```$ node app.js```
